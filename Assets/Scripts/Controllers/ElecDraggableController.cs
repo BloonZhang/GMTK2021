@@ -10,6 +10,11 @@ public class ElecDraggableController : MonoBehaviour
     // GameObjects
     [SerializeField] GameObject grid;
 
+    // Definition
+    // TODO: change based on zoom level
+    Vector2 dragMaxLimit = new Vector3(7.8f, 3.9f);
+    Vector2 dragMinLimit = new Vector3(1.9f, -2f);
+
     // helper
     bool isDragActive = false;
     bool isMouseOver = false;
@@ -25,7 +30,6 @@ public class ElecDraggableController : MonoBehaviour
                         Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 
                                                                    Input.mousePosition.y, 
                                                                    0));
-                                                                   
         }
 
         // On release
@@ -36,9 +40,11 @@ public class ElecDraggableController : MonoBehaviour
 
         if (isDragActive)
         {
-            Debug.Log("dragging");
             Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
+            curPosition = new Vector3(Mathf.Clamp(curPosition.x, dragMinLimit.x, dragMaxLimit.x),
+                                      Mathf.Clamp(curPosition.y, dragMinLimit.y, dragMaxLimit.y),
+                                      curPosition.z);
             grid.transform.position = curPosition;
         }
     }
