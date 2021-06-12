@@ -44,7 +44,7 @@ public class DialogueController : MonoBehaviour
 
             foreach (RaycastResult result in results)
             {
-                Debug.Log("Hit " + result.gameObject.name);
+                // Debug.Log("Hit " + result.gameObject.name);
                 if (result.gameObject == textArea) { CloseDialogue(); }
                 // alternatively
                 // if (result.gameObject == this) { CloseDialogue(); }
@@ -53,18 +53,18 @@ public class DialogueController : MonoBehaviour
     }
 
     // Helper methods
-    public void SetText(string str)
+    public void SetDialogue(string str)
+    {
+        SetText(str);
+        OpenDialogue();
+    }
+    void SetText(string str)
     {
         myTMP.text = str;
     }
     void OpenDialogue()
     {
         textArea.SetActive(true);
-    }
-    void OpenDialogue(string str)
-    {
-        SetText(str);
-        OpenDialogue();
     }
     void CloseDialogue()
     {
