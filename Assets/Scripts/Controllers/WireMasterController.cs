@@ -13,13 +13,23 @@ public class WireMasterController : MonoBehaviour
     [SerializeField] GameObject gridObject;
 
 
-
+    ElectricalComponent.Component[,] elecGrid = new ElectricalComponent.Component[18, 18];
 
     void Awake()
     {
         // Singleton shenanigans
         if (_instance != null && _instance != this) {Destroy(this.gameObject);} // no duplicates
         else {_instance = this;}
+    }
+
+    // public methods
+    public void SetCell(int x, int y, ElectricalComponent.Component component)
+    {
+        elecGrid[x,y] = component;
+    }
+    public void EmptyCell(int x, int y)
+    {
+        elecGrid[x,y] = ElectricalComponent.Component.empty;
     }
 
 }

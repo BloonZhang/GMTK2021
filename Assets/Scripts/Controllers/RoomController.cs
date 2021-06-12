@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: this class does not need to be monovehaviour
 public class RoomController : MonoBehaviour
 {
     public string name = "DefaultName";
