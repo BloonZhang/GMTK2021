@@ -10,10 +10,7 @@ public class RoomMasterController : MonoBehaviour
     public static RoomMasterController Instance { get {return _instance;} }
     //////// Singleton shenanigans continue in Awake() ////
 
-    [SerializeField]
-    public List<RoomController> myList;
-    public Dictionary<int, int> myDict;
-    public int myInt;
+    public List<RoomController> allRooms;
 
     void Awake()
     {
@@ -22,15 +19,19 @@ public class RoomMasterController : MonoBehaviour
         else {_instance = this;}
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SwitchToRoom(string id)
     {
-        
+        bool debug_changedRoom = false;
+        ClickableArea.lockClicks = true;
+        foreach (RoomController room in allRooms)
+        {
+            //room.enabled = (room.id != id);
+            room.gameObject.SetActive(room.id == id);
+            if (room.id == id) { debug_changedRoom = true; }
+        }
+        ClickableArea.lockClicks = false;
+        if (!debug_changedRoom) { Debug.Log("SwitchToRoom(" + id + ") did not find any rooms."); }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

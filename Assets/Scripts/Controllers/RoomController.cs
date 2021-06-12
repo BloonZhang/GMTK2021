@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomController : ScriptableObject
+public class RoomController : MonoBehaviour
 {
     public string name = "DefaultName";
     public string id = "DefaultID";
