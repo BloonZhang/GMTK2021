@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowController : ClickableArea
+public class InteractableController : ClickableArea
 {
 
-    public string toWhere;
-
-   protected override void OnMouseOver()
+    protected override void OnMouseOver()
     {
         if (!ClickableArea.lockClicks)
         {
@@ -21,7 +19,6 @@ public class ArrowController : ClickableArea
         if (!ClickableArea.lockClicks)
         {
             Debug.Log("clicked on: " + this.name);
-            RoomMasterController.Instance.SwitchToRoom(toWhere);
         }
     }
 
