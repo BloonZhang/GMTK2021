@@ -18,6 +18,8 @@ public class DialogueController : MonoBehaviour
 
     GraphicRaycaster raycaster;
 
+    bool clickedOnTextArea = false;
+
     void Awake()
     {
         // Singleton shenanigans
@@ -31,24 +33,16 @@ public class DialogueController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        // If LMB is clicked
+        // When LMB is clicked
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            // set up PointerEvent
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            List<RaycastResult> results = new List<RaycastResult>();
+            clickedOnTextArea = CheckIfMouseIsOver(textArea);
+        }
 
-            // Raycast
-            pointerData.position = Input.mousePosition;
-            this.raycaster.Raycast(pointerData, results);
-
-            foreach (RaycastResult result in results)
-            {
-                // Debug.Log("Hit " + result.gameObject.name);
-                if (result.gameObject == textArea) { CloseDialogue(); }
-                // alternatively
-                // if (result.gameObject == this) { CloseDialogue(); }
-            }
+        // When LMB is released
+        if (Input.GetKeyUp(KeyCode.Mouse0) && clickedOnTextArea)
+        {
+            if (CheckIfMouseIsOver(textArea)) { CloseDialogue(); }
         }
     }
 
@@ -71,5 +65,23 @@ public class DialogueController : MonoBehaviour
         SetText("");
         // ClickableArea.lockClicks = false; // optional
         textArea.SetActive(false);
+    }
+    bool CheckIfMouseIsOver(GameObject obj)
+    {
+        // set up PointerEvent
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        // Raycast
+        pointerData.position = Input.mousePosition;
+        this.raycaster.Raycast(pointerData, results);
+
+        bool found = false;
+        foreach (RaycastResult result in results)
+        {
+            // Debug.Log("Hit " + result.gameObject.name);
+            if (result.gameObject == obj) { found = true; }
+        }
+        return found;
     }
 }
